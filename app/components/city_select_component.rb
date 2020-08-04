@@ -9,7 +9,6 @@ class CitySelectComponent < ViewComponentReflex::Component
     @ending_city ||= cities.last
 
     identify_itinerary
-    set_city_options
   end
 
   def select_starting_city
@@ -26,7 +25,6 @@ class CitySelectComponent < ViewComponentReflex::Component
 
   def refresh_initinerary_with_selection
     identify_itinerary
-    set_city_options
     refresh! '#itinerary'
   end
 
@@ -34,10 +32,5 @@ class CitySelectComponent < ViewComponentReflex::Component
     @itinerary = ItineraryCalculator.call(country: @country, start: @starting_city, target: @ending_city).result
     @distance = @itinerary.distance
     @cities = @itinerary.cities
-  end
-
-  def set_city_options
-    @starting_city_options = cities.where.not(id: @starting_city.id)
-    @ending_city_options = cities.where.not(id: @starting_city.id)
   end
 end

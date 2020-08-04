@@ -8,7 +8,7 @@
       <%= reflex_tag(
         'change->select_starting_city',
         :select,
-        options_from_collection_for_select(@starting_city_options, :id, :name, @starting_city.id),
+        options_from_collection_for_select(cities, :id, :name, @starting_city.id),
         class: 'form-select',
       ) %>
     </div>
@@ -21,7 +21,7 @@
         <%= reflex_tag(
         'change->select_ending_city',
         :select,
-        options_from_collection_for_select(@ending_city_options, :id, :name, @ending_city.id),
+        options_from_collection_for_select(cities, :id, :name, @ending_city.id),
         class: 'form-select',
       ) %>
     </div>
@@ -33,7 +33,9 @@
     <h3>
       <%= @distance %>km <br>
     </h3>
-    <%= @cities.pluck(:name).join(' → ') %>
+    <p>
+      <%= @cities.pluck(:name).join(' → ') %>
+    </p>
   </div>
 
 <% end %>

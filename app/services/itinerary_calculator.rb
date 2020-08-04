@@ -9,9 +9,12 @@ class ItineraryCalculator # < BaseService that would handle errors, and set the 
     service
   end
 
+
   attr_reader :country, :start, :target, :result, :errors
 
   delegate :cities, to: :country
+
+  private
 
   def initialize(country:, start:, target:)
     @country = country
