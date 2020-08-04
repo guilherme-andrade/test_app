@@ -1,17 +1,32 @@
 <nav class="navbar navbar-dark w-100">
   <div class="container">
-    <%= link_to root_url, class: 'navbar-brand' do %>
-      Sheen
-    <% end %>
+    <div class="d-flex align-items-center">
+      <%= link_to root_url, class: 'navbar-brand' do %>
+        <%= inline_svg_pack_tag 'media/images/logo.svg', height: '30px', width: '30px' %>
+        <small class="ml-1">CountryRoads.io</small>
+      <% end %>
+      <ul class="nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            check out our roads, man
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">check out our roads, man</a></li>
+            <li><a class="dropdown-item" href="#">check out our roads, man</a></li>
+            <li><a class="dropdown-item" href="#">check out our roads, man</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">check out our roads, man</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
     <ul class="navbar-nav flex-row">
-      <li class="nav-item ml-5">
-        <%= link_to 'link', '', class: 'nav-link' %>
+      <li class="nav-item mr-1">
+        <%= link_to 'check out our roads, man', '', class: 'btn btn-sm btn-outline-black' %>
       </li>
-      <li class="nav-item ml-5">
-        <%= link_to 'link', '', class: 'nav-link' %>
-      </li>
-      <li class="nav-item ml-5">
-        <%= link_to 'link', '', class: 'nav-link font-weight-bold' %>
+      <li class="nav-item">
+        <%= link_to 'check out our roads, man', '', class: 'btn btn-sm btn-black' %>
       </li>
     </ul>
   </div>

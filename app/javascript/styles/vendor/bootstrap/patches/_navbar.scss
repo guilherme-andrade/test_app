@@ -1,9 +1,11 @@
 .navbar {
+  font-size: 14px;
+
   &-brand {
     font-weight: 600;
   }
 
-  .nav-link {
-    @extend .link;
+  .nav-item, .nav-item * {
+    font-size: 14px;
   }
 }

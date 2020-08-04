@@ -1,2 +1,17 @@
-<h1>Static#home</h1>
-<p>Find me in app/views/static/home.html.erb</p>
+<div class="container pt-5">
+  <div class="row align-items-center">
+    <div class="col-6">
+      <h1>
+        Find the best way anywhere.
+      </h1>
+      <p class="lead">
+        Coz we ain't got no time to waste.
+      </p>
+      <%= link_to 'In Belgium? We got you →', country_path(Country.belgium), class: 'btn btn-black' %>
+      <%= link_to 'a dead link', root_path, class: 'btn btn-outline-black' %>
+    </div>
+    <div class="col-6">
+      <%= inline_svg_pack_tag 'media/images/illustrations/hats-off.svg', height: 500, width: '100%' %>
+    </div>
+  </div>
+</div>

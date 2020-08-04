@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_203936) do
+ActiveRecord::Schema.define(version: 2020_08_04_111049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,5 +36,32 @@ ActiveRecord::Schema.define(version: 2020_08_01_203936) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.bigint "country_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_cities_on_country_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "roads", force: :cascade do |t|
+    t.bigint "starting_city_id", null: false
+    t.bigint "ending_city_id", null: false
+    t.integer "distance"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ending_city_id"], name: "index_roads_on_ending_city_id"
+    t.index ["starting_city_id"], name: "index_roads_on_starting_city_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "cities", "countries"
+  add_foreign_key "roads", "cities", column: "ending_city_id"
+  add_foreign_key "roads", "cities", column: "starting_city_id"
 end
