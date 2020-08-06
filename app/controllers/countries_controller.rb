@@ -8,7 +8,7 @@ class CountriesController < ApplicationController
   private
 
   def set_country
-    @country ||= Country.find_by_name(params[:name])
+    @country ||= Country.includes(:cities).find_by_name(params[:name])
   raise ActiveRecord::NotFound unless @country
   end
 end

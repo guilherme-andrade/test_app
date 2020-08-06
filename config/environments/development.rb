@@ -1,5 +1,13 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+  config.after_initialize do
+      Bullet.enable        = true
+      Bullet.alert         = true
+      Bullet.bullet_logger = true
+      Bullet.console       = true
+    # Bullet.growl         = true
+      Bullet.rails_logger  = true
+      Bullet.add_footer    = true
+    end  # Settings specified here will take precedence over those in config/application.rb.
 
   config.session_store :cache_store
 
@@ -54,4 +62,14 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.skip_html_injection = false
+    Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
+    Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware', ['my_file.rb', 'my_method'], ['my_file.rb', 16..20] ]
+  end
 end

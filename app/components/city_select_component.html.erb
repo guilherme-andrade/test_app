@@ -6,7 +6,7 @@
         Select your starting point
       </label>
       <%= reflex_tag(
-        'change->select_starting_city',
+        'input->select_starting_city',
         :select,
         options_from_collection_for_select(cities, :id, :name, @starting_city.id),
         class: 'form-select',
@@ -19,7 +19,7 @@
         Select your ending point
       </label>
         <%= reflex_tag(
-        'change->select_ending_city',
+        'input->select_ending_city',
         :select,
         options_from_collection_for_select(cities, :id, :name, @ending_city.id),
         class: 'form-select',

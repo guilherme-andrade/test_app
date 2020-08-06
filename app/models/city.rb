@@ -1,25 +1,60 @@
 class City < ApplicationRecord
   belongs_to :country
 
-  has_many :roads_starting, class_name: 'Road', foreign_key: 'starting_city_id'
-  has_many :roads_ending, class_name: 'Road', foreign_key: 'ending_city_id'
-
-  has_many :end_neighbors, through: :roads_starting, source: :ending_city
-  has_many :start_neighbors, through: :roads_ending, source: :starting_city
-
-  def roads
-    roads_starting.or(roads_ending).distinct
+  ROAD_TO_NEIGHBOR_QUERY = lambda do |city, neighbor|
+    <<-SQL
+      SELECT "roads"."distance", "roads"."id" FROM "roads"
+      JOIN "cities" ON "roads"."starting_city_id" = "cities"."id"
+      WHERE "roads"."ending_city_id" = #{city.id} AND "roads"."starting_city_id" = #{neighbor.id}
+      UNION
+      SELECT "roads"."distance", "roads"."id" FROM "roads"
+      JOIN "cities" ON "roads"."ending_city_id" = "cities"."id"
+      WHERE "roads"."starting_city_id" = #{city.id} AND "roads"."ending_city_id" = #{neighbor.id}
+      LIMIT 1
+    SQL
   end
 
-  def neighbors
-    end_neighbors.or(end_neighbors)
+  ROADS_QUERY = lambda do |city|
+    <<-SQL
+      SELECT "roads".* FROM "roads"
+      JOIN "cities" ON "roads"."starting_city_id" = "cities"."id"
+      WHERE "roads"."ending_city_id" = #{city.id}
+      UNION
+      SELECT "roads".* FROM "roads"
+      JOIN "cities" ON "roads"."ending_city_id" = "cities"."id"
+      WHERE "roads"."starting_city_id" = #{city.id}
+    SQL
+  end
+
+  # the most efficient way I found to retrieve neighbors
+  NEIGHBORS_QUERY = lambda do |city|
+    <<-SQL
+      SELECT "cities"."id", "cities"."name" FROM "cities"
+      JOIN "roads" ON "roads"."starting_city_id" = "cities"."id"
+      WHERE "roads"."ending_city_id" = #{city.id}
+      UNION
+      SELECT "cities"."id", "cities"."name" FROM "cities"
+      JOIN "roads" ON "roads"."ending_city_id" = "cities"."id"
+      WHERE "roads"."starting_city_id" = #{city.id}
+    SQL
+  end
+
+  NEIGHBORS_SCOPE = lambda do |city|
+    find_by_sql(NEIGHBORS_QUERY.call(city))
+  end
+
+  def roads
+    query = ROADS_QUERY.call(self)
+    Road.find_by_sql(query)
   end
 
   def road_to(neighbor)
-    roads.find_by(ending_city_id: neighbor.id)
+    query = ROAD_TO_NEIGHBOR_QUERY.call(self, neighbor)
+    Road.find_by_sql(query)&.first
   end
 
-  # def neighbors
-  #   City.find(roads.pluck(:starting_city_id)).or(City.find(:ending))
-  # end
+  def neighbors
+    query = NEIGHBORS_QUERY.call(self)
+    City.find_by_sql(query)
+  end
 end

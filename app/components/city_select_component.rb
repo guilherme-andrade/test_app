@@ -25,7 +25,6 @@ class CitySelectComponent < ViewComponentReflex::Component
 
   def refresh_initinerary_with_selection
     identify_itinerary
-    refresh! '#itinerary'
   end
 
   def identify_itinerary
