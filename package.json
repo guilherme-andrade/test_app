@@ -13,7 +13,7 @@
     "bootstrap-icons": "^1.0.0-alpha5",
     "file-loader": "^6.0.0",
     "popper.js": "^1.16.1",
-    "prismjs": "^1.20.0",
+    "prismjs": "^1.23.0",
     "resolve-url-loader": "^3.1.1",
     "stimulus_reflex": "^3.3.0-pre2",
     "trix": "^1.2.3",
